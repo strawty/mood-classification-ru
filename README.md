@@ -67,7 +67,13 @@ Hypothesis: fine-tuning should help `меланхоличное` and `споко
 
 ## What I would do next
 
-<!-- Твои пять предложений: где было интересно, где шло через силу, что дальше. Пиши своими словами, это самая ценная часть README. -->
+I would like to build a larger dataset and rerun the experiments. The scores I got are not good enough to be useful yet, and with only 100 samples a difference of 0.03 in macro-F1 is noise rather than a result. I plan to collect at least 1,000 descriptions so that differences between the methods become measurable. Every class also needs enough examples: `спокойное` had only 17, which is too few to learn from.
+
+The most interesting thing I found is that the two representations seem to capture different signals. Melancholic texts carry their mood in specific words (тоска, одиночество, пусто, расставание), and character n-grams catch these directly. Anxious texts mostly describe a situation rather than use marker words ("something dangerous is about to happen, but I want it"). Character by character they look energetic, which is why TF-IDF sent 11 of them to `энергичное`. Embeddings capture that the situation is threatening, and `тревожное` went from 0.28 to 0.48. At the same time embeddings blur the marker words of melancholic texts into a general "sad" region shared with calm texts, so `меланхоличное` dropped from 0.37 to 0.28.
+
+My next step is to combine both representations, so the model sees words and meaning at once, and check whether this pattern holds on a larger dataset. With 100 samples it is a hypothesis, not a finding. I would also like the texts to be labelled by more than one person, since at the moment the same person wrote them and assigned the labels.
+
+I enjoyed the process of creating my own data and training on it, including the parts that were slow.
 
 ## Reproduce
 
